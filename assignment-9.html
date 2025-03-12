@@ -1,379 +1,671 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amakart - Shopping Kart</title>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #121212;
-      color: white;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(to right, #8A2BE2, #FF00FF);
-      padding: 15px 30px;
-      font-size: 1.2rem;
-    }
-
-    .logo {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    /* Container for nav links and theme toggle button */
-    .nav-container {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .nav-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: white;
-      font-size: 1rem;
-      transition: all 0.3s ease-in-out;
-      padding: 5px 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 5px;
-    }
-
-    .nav-links a i {
-      font-size: 1.2rem;
-    }
-
-    .nav-links a:hover {
-      background: #FFD700;
-      color: black;
-    }
-
-    /* Theme Toggle Button Style */
-    #theme-toggle {
-      background: #8A2BE2;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    #theme-toggle:hover {
-      background: #FFD700;
-      transform: scale(1.05);
-      color: black;
-    }
-
-
-    .description {
-      text-align: center;
-      padding: 20px;
-      font-size: 1.1rem;
-      color: #bbb;
-    }
-
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 15px;
-    }
-
-    .product {
-      background: #1E1E1E;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-      text-align: center;
-      width: 240px;
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    }
-
-    .product:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(138, 43, 226, 0.8);
-    }
-
-    .product img {
-      width: 100%;
-      height: 200px;
-      object-fit: contain;
-      border-radius: 5px;
-      background-color: #fff;
-      padding: 10px;
-    }
-
-    .product h3 {
-      font-size: 1.1rem;
-      margin: 10px 0;
-    }
-
-    .product p {
-      font-size: 1rem;
-      color: #FFD700;
-      font-weight: bold;
-    }
-
-    button {
-      background: #8A2BE2;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      margin-top: 10px;
-      width: 100%;
-      border-radius: 5px;
-      font-size: 1rem;
-      transition: all 0.3s ease-in-out;
-    }
-
-    button:hover {
-      background: #FF00FF;
-      transform: scale(1.05);
-    }
-
-    .cart {
-      background: #1E1E1E;
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-      max-width: 450px;
-    }
-
-    .cart h2 {
-      text-align: center;
-    }
-
-    .cart ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .cart ul li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #444;
-    }
-
-    .cart p {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .remove-btn {
-      background: red;
-      border: none;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease-in-out;
-    }
-
-    .remove-btn:hover {
-      background: darkred;
-    }
-
-    /* Light Mode Overrides */
-    body.light-mode {
-      background: #ffffff;
-      color: #121212;
-    }
-
-    body.light-mode header {
-      background: #e0e0e0;
-      color: #121212;
-    }
-
-    body.light-mode .nav-links a {
-      color: #121212;
-    }
-
-    body.light-mode .nav-links a:hover {
-      background: #f5f5f5;
-      color: #121212;
-    }
-
-    body.light-mode .product {
-      background: #f9f9f9;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    body.light-mode .product h3 {
-      color: #121212;
-    }
-
-    body.light-mode .product p {
-      color: #FF8C00;
-    }
-
-    body.light-mode button {
-      background: #008CBA;
-      color: white;
-    }
-
-    body.light-mode button:hover {
-      background: #005f6b;
-    }
-
-    body.light-mode .cart {
-      background: #f9f9f9;
-      color: #121212;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Amakart - Shopping Kart</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<style>
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #121212;
+  color: white;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #8A2BE2, #FF00FF);
+  padding: 15px 30px;
+  font-size: 1.2rem;
+}
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+}
+.nav-links a i {
+  font-size: 1.2rem;
+}
+.nav-links a:hover {
+  background: #FFD700;
+  color: black;
+}
+#theme-toggle {
+  background: #8A2BE2;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#theme-toggle:hover {
+  background: #FF00FF;
+  transform: scale(1.05);
+}
+.description {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1rem;
+  color: #bbb;
+}
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 15px;
+}
+.product {
+  background: #1E1E1E;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  width: 240px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.product:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.8);
+}
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 10px;
+}
+.product h3 {
+  font-size: 1.1rem;
+  margin: 10px 0;
+}
+.product p {
+  font-size: 1rem;
+  color: #FFD700;
+  font-weight: bold;
+}
+button {
+  background: #8A2BE2;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+button:hover {
+  background: #FF00FF;
+  transform: scale(1.05);
+}
+.cart {
+  background: #1E1E1E;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  max-width: 450px;
+}
+.cart h2 {
+  text-align: center;
+}
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+.cart ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+.cart p {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.remove-btn {
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+.remove-btn:hover {
+  background: darkred;
+}
+.timer-section {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #2e2e2e;
+}
+.timer-section h2 {
+  margin-bottom: 15px;
+}
+.timer-display {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #000;
+}
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.timer-controls input {
+  width: 80px;
+  padding: 4px;
+  font-size: 0.9rem;
+}
+.timer-controls button {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #8A2BE2;
+  color: white;
+  transition: background 0.3s ease-in-out;
+}
+.timer-controls button:hover {
+  background: #FF00FF;
+}
+.style-changer-section {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #2e2e2e;
+}
+.list-manipulation-section {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #2e2e2e;
+}
+.list-controls {
+  margin-top: 10px;
+}
+.list-controls button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #8A2BE2;
+  color: white;
+  transition: background 0.3s ease-in-out;
+}
+.list-controls button:hover {
+  background: #FF00FF;
+}
+.dynamic-table-section {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #2e2e2e;
+}
+.table-controls {
+  margin-bottom: 10px;
+}
+.table-controls input {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.table-controls button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #8A2BE2;
+  color: white;
+  transition: background 0.3s ease-in-out;
+}
+.table-controls button:hover {
+  background: #FF00FF;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+table th, table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+.image-gallery-section {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #2e2e2e;
+}
+.gallery-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.gallery-container .thumbnail {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  transition: transform 0.3s;
+}
+.gallery-container .thumbnail:hover {
+  transform: scale(1.05);
+}
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  max-width: 90%;
+  max-height: 80%;
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+body.light-mode {
+  background: #ffffff;
+  color: #121212;
+}
+body.light-mode header {
+  background: #e0e0e0;
+  color: #121212;
+}
+body.light-mode .nav-links a {
+  color: #121212;
+}
+body.light-mode .nav-links a:hover {
+  background: #f5f5f5;
+  color: #121212;
+}
+body.light-mode .product {
+  background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+body.light-mode .product h3 {
+  color: #121212;
+}
+body.light-mode .product p {
+  color: #FF8C00;
+}
+body.light-mode button {
+  background: #008CBA;
+  color: white;
+}
+body.light-mode button:hover {
+  background: #005f6b;
+}
+body.light-mode .cart {
+  background: #f9f9f9;
+  color: #121212;
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">📦 AmaKart</div>
-    <div class="nav-container">
-      <ul class="nav-links">
-        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="https://nitw.ac.in/"><i class="fas fa-phone"></i> Contact Us</a></li>
-        <li><a href="https://www.instagram.com/"><i class="fab fa-instagram"></i> Instagram</a></li>
-        <li><a href="https://www.facebook.com/"><i class="fab fa-facebook"></i> Facebook</a></li>
-      </ul>
-      <!-- Theme Toggle Button with Icon -->
-      <button id="theme-toggle"><i class="fas fa-sun"></i> Light Mode</button>
-    </div>
-  </header>
-
-  <section class="description">
-    <p>
-      Welcome to our AmaKart. Explore various kinds of products. Offers are applicable, fastest finger first! Be the first one to get a <b>20% discount</b> on your first order!!
-    </p>
+<header>
+  <div class="logo">📦 AmaKart</div>
+  <div class="nav-container">
+    <ul class="nav-links">
+      <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="https://nitw.ac.in/"><i class="fas fa-phone"></i> Contact Us</a></li>
+      <li><a href="https://www.instagram.com/"><i class="fab fa-instagram"></i> Instagram</a></li>
+      <li><a href="https://www.facebook.com/"><i class="fab fa-facebook"></i> Facebook</a></li>
+    </ul>
+    <button id="theme-toggle"><i class="fas fa-sun"></i> Light Mode</button>
+  </div>
+</header>
+<section class="description">
+  <p>Welcome to our AmaKart. Explore various kinds of products. Offers are applicable, fastest finger first! Be the first one to get a <b>20% discount</b> on your first order!!</p>
+</section>
+<main>
+  <section id="product-list" class="products"></section>
+  <section id="cart" class="cart">
+    <h2>🛒 Shopping Cart</h2>
+    <ul id="cart-items"></ul>
+    <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
   </section>
-
-  <main>
-    <section id="product-list" class="products"></section>
-
-    <section id="cart" class="cart">
-      <h2>🛒 Shopping Cart</h2>
-      <ul id="cart-items"></ul>
-      <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
-    </section>
-  </main>
-
-  <script>
-    class Product {
-      constructor(id, name, price, image) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.image = image;
-      }
-
-      createProductElement() {
-        const productDiv = document.createElement("div");
-        productDiv.classList.add("product");
-
-        productDiv.innerHTML = `
-          <img src="${this.image}" alt="${this.name}">
-          <h3>${this.name}</h3>
-          <p>$${this.price.toFixed(2)}</p>
-          <button onclick="cart.addToCart(${this.id})">Add to Cart</button>
-        `;
-        return productDiv;
-      }
+  <section id="timer-section" class="timer-section">
+    <h2>Countdown Timer</h2>
+    <div id="timer-display" class="timer-display">00:00</div>
+    <div class="timer-controls">
+      <input type="number" id="timer-input" placeholder="Enter seconds" min="1" />
+      <button id="start-timer">Start</button>
+      <button id="pause-timer">Pause</button>
+      <button id="resume-timer">Resume</button>
+      <button id="reset-timer">Reset</button>
+    </div>
+  </section>
+  <section id="style-changer-section" class="style-changer-section">
+    <h2>Style Changer</h2>
+    <p id="style-target">This is a sample text whose style will be changed.</p>
+    <button id="change-style-btn">Change Style</button>
+  </section>
+  <section id="list-manipulation-section" class="list-manipulation-section">
+    <h2>List Manipulation</h2>
+    <ul id="item-list">
+      <li>Banana</li>
+      <li>Apple</li>
+      <li>Orange</li>
+      <li>Apple</li>
+      <li>Mango</li>
+      <li>Banana</li>
+    </ul>
+    <div class="list-controls">
+      <button id="sort-list">Sort Alphabetically</button>
+      <button id="filter-duplicates">Filter Duplicates</button>
+      <button id="reverse-list">Reverse Order</button>
+    </div>
+  </section>
+  <section id="dynamic-table-section" class="dynamic-table-section">
+    <h2>Dynamic Table</h2>
+    <div class="table-controls">
+      <input type="text" id="name-input" placeholder="Name" />
+      <input type="number" id="age-input" placeholder="Age" />
+      <input type="email" id="email-input" placeholder="Email" />
+      <button id="add-row">Add Row</button>
+    </div>
+    <table id="data-table" border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+  <section id="image-gallery-section" class="image-gallery-section">
+    <h2>Image Gallery</h2>
+    <div class="gallery-container">
+      <img src="https://via.placeholder.com/150" alt="Gallery Image 1" class="thumbnail" data-large="https://via.placeholder.com/600">
+      <img src="https://via.placeholder.com/150/0000FF" alt="Gallery Image 2" class="thumbnail" data-large="https://via.placeholder.com/600/0000FF">
+      <img src="https://via.placeholder.com/150/FF0000" alt="Gallery Image 3" class="thumbnail" data-large="https://via.placeholder.com/600/FF0000">
+    </div>
+  </section>
+</main>
+<div id="image-modal" class="image-modal">
+  <span id="modal-close" class="modal-close">&times;</span>
+  <img id="modal-img" class="modal-content" src="">
+</div>
+<script>
+class Product {
+  constructor(id, name, price, image) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.image = image;
+  }
+  createProductElement() {
+    const productDiv = document.createElement("div");
+    productDiv.classList.add("product");
+    productDiv.innerHTML = `<img src="${this.image}" alt="${this.name}"><h3>${this.name}</h3><p>$${this.price.toFixed(2)}</p><button onclick="cart.addToCart(${this.id})">Add to Cart</button>`;
+    return productDiv;
+  }
+}
+class Cart {
+  constructor() {
+    this.items = [];
+  }
+  addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      this.items.push(product);
+      this.updateCartUI();
     }
-
-    class Cart {
-      constructor() {
-        this.items = [];
-      }
-
-      addToCart(productId) {
-        const product = products.find(p => p.id === productId);
-        if (product) {
-          this.items.push(product);
-          this.updateCartUI();
-        }
-      }
-
-      removeFromCart(index) {
-        this.items.splice(index, 1);
-        this.updateCartUI();
-      }
-
-      updateCartUI() {
-        document.getElementById("cart-items").innerHTML = this.items.map((item, index) => `
-          <li>${item.name} - $${item.price.toFixed(2)}
-            <button class="remove-btn" onclick="cart.removeFromCart(${index})">Remove</button>
-          </li>
-        `).join("");
-        document.getElementById("cart-total").textContent = this.items
-          .reduce((total, item) => total + item.price, 0)
-          .toFixed(2);
-      }
+  }
+  removeFromCart(index) {
+    this.items.splice(index, 1);
+    this.updateCartUI();
+  }
+  updateCartUI() {
+    document.getElementById("cart-items").innerHTML = this.items.map((item, index) => `<li>${item.name} - $${item.price.toFixed(2)}<button class="remove-btn" onclick="cart.removeFromCart(${index})">Remove</button></li>`).join("");
+    document.getElementById("cart-total").textContent = this.items.reduce((total, item) => total + item.price, 0).toFixed(2);
+  }
+}
+const products = [
+  new Product(1, 'iQOO Z9x 5G', 699, 'iqoo29x.jpg'),
+  new Product(2, 'Samsung Galaxy A05', 299, 'ssg a05.jpg'),
+  new Product(3, 'HP Pavilion x360', 1299, 'Hp pavilion.jpg'),
+  new Product(4, 'Nikon Digital Camera Z50II', 1200, 'Nikon.jpg'),
+  new Product(5, 'Sony PS5® Console', 999, 'PS5.jpg'),
+  new Product(6, 'MuscleBlaze Whey Protein', 59, 'MuscleBlaze.jpg'),
+  new Product(7, 'Axor Apex Hunter Helmet', 150, 'Axor apex.webp'),
+  new Product(8, 'Odyssey Game', 69, 'Odessy.jpg')
+];
+const cart = new Cart();
+document.getElementById("product-list").append(...products.map(p => p.createProductElement()));
+function toggleTheme() {
+  const themeBtn = document.getElementById('theme-toggle');
+  if (document.body.classList.contains('light-mode')) {
+    document.body.classList.remove('light-mode');
+    localStorage.setItem('theme', 'dark');
+    themeBtn.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+  } else {
+    document.body.classList.add('light-mode');
+    localStorage.setItem('theme', 'light');
+    themeBtn.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+  }
+}
+document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+(function initializeTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const themeBtn = document.getElementById('theme-toggle');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    themeBtn.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+  } else {
+    themeBtn.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+  }
+})();
+let timerInterval = null;
+let timeLeft = 0;
+function updateTimerDisplay() {
+  const display = document.getElementById('timer-display');
+  if (timeLeft <= 0) {
+    display.textContent = "Time's up!";
+    display.style.backgroundColor = '#d3d3d3';
+    return;
+  }
+  display.textContent = timeLeft + "s";
+  if (timeLeft > 10) {
+    display.style.backgroundColor = 'green';
+  } else if (timeLeft >= 5) {
+    display.style.backgroundColor = 'yellow';
+  } else {
+    display.style.backgroundColor = 'red';
+  }
+}
+function updateTimer() {
+  if (timeLeft <= 0) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    updateTimerDisplay();
+    return;
+  }
+  timeLeft--;
+  updateTimerDisplay();
+}
+document.getElementById('start-timer').addEventListener('click', () => {
+  if (timerInterval) clearInterval(timerInterval);
+  const inputVal = document.getElementById('timer-input').value;
+  let seconds = parseInt(inputVal);
+  if (isNaN(seconds) || seconds <= 0) {
+    alert("Please enter a valid number of seconds");
+    return;
+  }
+  timeLeft = seconds;
+  updateTimerDisplay();
+  timerInterval = setInterval(updateTimer, 1000);
+});
+document.getElementById('pause-timer').addEventListener('click', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+});
+document.getElementById('resume-timer').addEventListener('click', () => {
+  if (!timerInterval && timeLeft > 0) {
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+});
+document.getElementById('reset-timer').addEventListener('click', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  timeLeft = 0;
+  updateTimerDisplay();
+});
+document.getElementById('change-style-btn').addEventListener('click', () => {
+  const target = document.getElementById('style-target');
+  if(target.style.color === 'cyan') {
+    target.style.color = '';
+    target.style.fontSize = '';
+    target.style.backgroundColor = '';
+  } else {
+    target.style.color = 'cyan';
+    target.style.fontSize = '1.5rem';
+    target.style.backgroundColor = '#000';
+  }
+});
+document.getElementById('sort-list').addEventListener('click', () => {
+  const list = document.getElementById('item-list');
+  let items = Array.from(list.getElementsByTagName('li')).map(li => li.textContent);
+  items.sort();
+  list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+});
+document.getElementById('filter-duplicates').addEventListener('click', () => {
+  const list = document.getElementById('item-list');
+  let items = Array.from(list.getElementsByTagName('li')).map(li => li.textContent);
+  let uniqueItems = [];
+  items.forEach(item => {
+    if(!uniqueItems.includes(item)) {
+      uniqueItems.push(item);
     }
-
-    const products = [
-      new Product(1, 'iQOO Z9x 5G', 699, 'iqoo29x.jpg'),
-      new Product(2, 'Samsung Galaxy A05', 299, 'ssg a05.jpg'),
-      new Product(3, 'HP Pavilion x360', 1299, 'Hp pavilion.jpg'),
-      new Product(4, 'Nikon Digital Camera Z50II', 1200, 'Nikon.jpg'),
-      new Product(5, 'Sony PS5® Console', 999, 'PS5.jpg'),
-      new Product(6, 'MuscleBlaze Whey Protein', 59, 'MuscleBlaze.jpg'),
-      new Product(7, 'Axor Apex Hunter Helmet', 150, 'Axor apex.webp'),
-      new Product(8, 'Odyssey Game', 69, 'Odessy.jpg')
-    ];
-
-    const cart = new Cart();
-    document.getElementById("product-list").append(...products.map(p => p.createProductElement()));
-
-    // Theme Toggle Functionality with Icon Change
-    function toggleTheme() {
-      const themeBtn = document.getElementById('theme-toggle');
-      if (document.body.classList.contains('light-mode')) {
-        document.body.classList.remove('light-mode');
-        localStorage.setItem('theme', 'dark');
-        themeBtn.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
-      } else {
-        document.body.classList.add('light-mode');
-        localStorage.setItem('theme', 'light');
-        themeBtn.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
-      }
-    }
-
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
-    // Initialize theme based on localStorage immediately (script is at end of body)
-    (function initializeTheme() {
-      const savedTheme = localStorage.getItem('theme');
-      const themeBtn = document.getElementById('theme-toggle');
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        themeBtn.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
-      } else {
-        themeBtn.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
-      }
-    })();
-  </script>
+  });
+  list.innerHTML = uniqueItems.map(item => `<li>${item}</li>`).join('');
+});
+document.getElementById('reverse-list').addEventListener('click', () => {
+  const list = document.getElementById('item-list');
+  let items = Array.from(list.getElementsByTagName('li')).map(li => li.textContent);
+  items.reverse();
+  list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+});
+document.getElementById('add-row').addEventListener('click', () => {
+  const name = document.getElementById('name-input').value;
+  const age = document.getElementById('age-input').value;
+  const email = document.getElementById('email-input').value;
+  if(name === "" || age === "" || email === "") {
+    alert("Please fill all fields");
+    return;
+  }
+  const tbody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+  const newRow = document.createElement('tr');
+  newRow.innerHTML = `<td contenteditable="true">${name}</td><td contenteditable="true">${age}</td><td contenteditable="true">${email}</td><td><button class="delete-row">Delete</button></td>`;
+  tbody.appendChild(newRow);
+  document.getElementById('name-input').value = "";
+  document.getElementById('age-input').value = "";
+  document.getElementById('email-input').value = "";
+});
+document.getElementById('data-table').addEventListener('click', (e) => {
+  if(e.target && e.target.classList.contains('delete-row')) {
+    const row = e.target.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+  }
+});
+const thumbnails = document.querySelectorAll('.thumbnail');
+const modal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+const modalClose = document.getElementById('modal-close');
+thumbnails.forEach(thumbnail => {
+  thumbnail.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    modalImg.src = thumbnail.getAttribute('data-large');
+  });
+});
+modalClose.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+modal.addEventListener('click', (e) => {
+  if(e.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+</script>
 </body>
 </html>
